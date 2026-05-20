@@ -6,17 +6,17 @@
 
 | 版块 | 入口 | 说明 |
 | --- | --- | --- |
-| Git | [git/.index.md](./git/.index.md) | Git 协作、分支、提交、审查、版本管理 |
-| Docker | [docker/.index.md](./docker/.index.md) | 容器化、镜像、Compose、交付与排障 |
-| Finance | [finance/.index.md](./finance/.index.md) | 个人理财、资产配置、风险管理 |
+| Git | [git/_index.md](./git/_index.md) | Git 协作、分支、提交、审查、版本管理 |
+| Docker | [docker/_index.md](./docker/_index.md) | 容器化、镜像、Compose、交付与排障 |
+| Finance | [finance/_index.md](./finance/_index.md) | 个人理财、资产配置、风险管理 |
 
 规则：
 
-* 每个一级知识版块必须维护 `.index.md`。
-* 新增领域时，先建目录和 `.index.md`，再写具体文档。
+* 每个一级知识版块必须维护 `_index.md`。
+* 新增领域时，先建目录和 `_index.md`，再写具体文档。
 * 复杂知识点单独拆成 `.md` 文件，不堆在索引里。
 * 大纲文件使用 `00_` 前缀；专题文件使用数字前缀。
-* 新增、删除、重命名文档后，必须同步更新对应 `.index.md`。
+* 新增、删除、重命名文档后，必须同步更新对应 `_index.md`。
 
 ## 2. 写作规范
 
@@ -33,7 +33,7 @@
 Agent 修改仓库时：
 
 1. 先读本文件。
-2. 再读目标版块的 `.index.md`。
+2. 再读目标版块的 `_index.md`。
 3. 只修改与任务直接相关的文件。
 4. 保留用户已有改动，不做无关重构。
 5. 若发现索引和目录不一致，优先修正索引。
