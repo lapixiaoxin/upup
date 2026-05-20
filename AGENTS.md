@@ -86,7 +86,114 @@ finance/.index.md
 5. 如果是修改既有内容，保持原有结构风格，不做无关重构。
 6. 如果发现目录和索引不一致，优先修正索引。
 
-## 7. 当前维护路线
+## 7. 当前仓库 Git 维护约定
+
+本仓库是个人知识管理项目，不采用企业多人协作下的严格分支流程。除非用户明确要求新建分支、发起 PR 或模拟企业协作流程，否则 Agent 可以直接在 `main` 分支上维护文档。
+
+### 7.1 默认工作流
+
+日常文档更新默认使用以下流程：
+
+```bash
+git status --branch --short
+git pull --ff-only origin main
+# 修改文档
+git add <changed-files>
+git commit -m "docs(scope): subject"
+git push origin main
+```
+
+约束说明：
+
+* 修改前先确认当前分支和工作区状态，避免覆盖用户未提交的改动。
+* 推送前优先使用 `git pull --ff-only origin main` 同步远端，避免产生不必要的 merge commit。
+* 默认不新建功能分支；只有在大规模重构、长期未完成内容、用户明确要求隔离修改时才创建分支。
+* 默认不使用 `git push --force` 或 `git push --force-with-lease`。
+* `.DS_Store` 等本地系统文件必须保持忽略状态，不得提交到仓库。
+
+### 7.2 当前远程仓库
+
+当前仓库远程地址使用个人 GitHub SSH Host 别名：
+
+```bash
+origin git@github.com-personal:lapixiaoxin/upup.git
+```
+
+如果后续 Agent 发现推送失败，应优先检查：
+
+```bash
+git remote -v
+ssh -T github.com-personal
+```
+
+> `github.com-personal` 依赖本机 `~/.ssh/config` 中的 Host 配置，用于隔离个人 GitHub SSH Key，不应覆盖公司 SSH Key。
+
+### 7.3 提交身份
+
+本仓库属于个人知识管理项目，提交身份应优先使用个人 GitHub 账号信息，而不是公司全局 Git 配置。
+
+检查当前仓库本地提交身份：
+
+```bash
+git config --local user.name
+git config --local user.email
+```
+
+如未配置，应在当前仓库内设置本地身份：
+
+```bash
+git config user.name "lapixiaoxin"
+git config user.email "<personal-email>"
+```
+
+> 以上配置只影响当前仓库，不影响公司项目的全局 Git 配置。
+
+### 7.4 提交信息规范
+
+本仓库以 Markdown 文档维护为主，提交信息采用轻量级约定式提交：
+
+```text
+<type>(<scope>): <subject>
+```
+
+常用 `type`：
+
+| Type | 使用场景 |
+| --- | --- |
+| `docs` | 新增、修改、重构知识文档 |
+| `chore` | 调整仓库配置、忽略文件、目录结构等非正文内容 |
+| `fix` | 修正文档中的错误、失效链接、明显不准确表述 |
+| `refactor` | 重组文档结构但不改变核心内容 |
+
+常用 `scope`：
+
+| Scope | 使用场景 |
+| --- | --- |
+| `global` | 顶层规范、全局索引、仓库结构 |
+| `git` | Git 知识版块 |
+| `docker` | Docker 知识版块 |
+| `finance` | 个人理财知识版块 |
+
+示例：
+
+```bash
+git commit -m "docs(global): 更新仓库 Git 维护约定"
+git commit -m "docs(git): 补充分支管理学习路径"
+git commit -m "chore(global): 忽略 macOS 本地系统文件"
+git commit -m "fix(finance): 修正风险提示表述"
+```
+
+### 7.5 Agent 提交边界
+
+Agent 修改本仓库时，应遵守以下提交边界：
+
+* 只提交与当前用户请求直接相关的文件。
+* 不把用户未要求修改的知识版块顺手重构。
+* 不提交本地缓存、系统文件、编辑器临时文件或凭据文件。
+* 如果发现工作区已有用户改动，必须保留并基于现状继续工作。
+* 未经用户要求，不为普通文档更新创建分支或 PR。
+
+## 8. 当前维护路线
 
 * **第一阶段：Git 版块完善**  
   补齐代码审查、合并策略、冲突解决、历史恢复、Git Hooks、权限安全等企业协作主题。
